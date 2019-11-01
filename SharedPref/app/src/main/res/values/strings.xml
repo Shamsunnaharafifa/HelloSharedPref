@@ -7,4 +7,6 @@
     <string name="default_count">0</string>
     <string name="button_count">Count</string>
     <string name="reset_button">Reset</string>
+    <string name="launch_button">Launch</string>
+    <string name="toggle_button">Toggle</string>
 </resources>
