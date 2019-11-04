@@ -1,5 +1,4 @@
 package com.example.afifa123.sharedpref
-
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
@@ -34,19 +33,11 @@ class MainActivity : AppCompatActivity() {
 
         mPreferances = getSharedPreferences(shareedPreFile, Context.MODE_PRIVATE)
 
-        //Restore the saved instance state
-       /* if (savedInstanceState != null){
-            mCount = savedInstanceState.getInt(COUNT_KEY)
-            if (mCount != 0){
-                mShowCountTextView.setText(String.format("%s", mCount))
-            }
-            mColor = savedInstanceState.getInt(COUNT_KEY)
-            mShowCountTextView.setBackgroundColor(mColor)
-        }*/
         mCount = mPreferances.getInt(COUNT_KEY,0)
         mShowCountTextView.setText(String.format("%s",mCount))
         mColor = mPreferances.getInt(COLOR_KEY, mColor)
         mShowCountTextView.setBackgroundColor(mColor)
+
     }
 
     fun changeBackground(view: View) {
