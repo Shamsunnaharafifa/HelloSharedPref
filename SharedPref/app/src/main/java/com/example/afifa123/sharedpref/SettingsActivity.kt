@@ -6,32 +6,33 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
 
     private val SPINNER_KEY = "Spinner"
-    private var spinner_button:Int = 0
+    private var spinner_button: Int = 0
 
     private val TOGGLE_KEY = "Toggle"
-    private var toggle_button:Boolean = false
-    private lateinit var mPreferances : SharedPreferences
+    private var toggle_button: Boolean = false
+    private lateinit var mPreferances: SharedPreferences
     private var shareedPreFile = "com.example.afifa123.sharedpref"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        spinner()
-        toggle()
-
-        val launch_button:Button= findViewById(R.id.launch_button)
+        val launch_button: Button = findViewById(R.id.launch_button)
         launch_button.setOnClickListener {
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         mPreferances = getSharedPreferences(shareedPreFile, Context.MODE_PRIVATE)
         toggle_button= mPreferances.getBoolean(TOGGLE_KEY,false)
         spinner_button = mPreferances.getInt(SPINNER_KEY,0)
+        spinner()
+        toggle()
 
     }
 
@@ -45,12 +46,13 @@ class SettingsActivity : AppCompatActivity() {
         val names = arrayOf(
             "A", "B","C","D","E","F","G"
             )
-        val spinner_button:Spinner = findViewById(R.id.spinner)
+        var spinner_button = findViewById(R.id.spinner) as Spinner
         if (spinner_button != null){
             val arrayAdapter = ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,names)
             spinner_button.adapter = arrayAdapter
 
-            /*spinner_button.setSelection(mPreferances.getInt(SPINNER_KEY,0))*/
+            mPreferances = getSharedPreferences(shareedPreFile, Context.MODE_PRIVATE)
+            spinner_button.setSelection(mPreferances.getInt(SPINNER_KEY,0))
 
             spinner_button.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onItemSelected(
@@ -65,8 +67,9 @@ class SettingsActivity : AppCompatActivity() {
 
                     }
                     mPreferances.edit()
-                        .putInt("SPINNER_KEY",0)
+                        .putInt(SPINNER_KEY,0)
                         .apply()
+
                     Toast.makeText(this@SettingsActivity, getString(R.string.selected_item)
                             + "" + names[position],Toast.LENGTH_SHORT).show()
                 }
@@ -78,15 +81,15 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun toggle(){
-        val toggle_button:ToggleButton =  findViewById(R.id.toggle_button)
-        toggle_button.setOnCheckedChangeListener{
-           buttonView, isChecked ->
+    private fun toggle() {
+        val toggle_button: ToggleButton = findViewById(R.id.toggle_button)
+        toggle_button.setOnCheckedChangeListener { buttonView, isChecked ->
 
-            val msg = "Toggle Button is:" + if(isChecked)"ON" else "OFF"
-            Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
+            val msg = "Toggle Button is:" + if (isChecked) "ON" else "OFF"
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
         }
-        /*toggle_button.isChecked = mPreferances.getBoolean(TOGGLE_KEY,false)*/
+        mPreferances = getSharedPreferences(shareedPreFile, Context.MODE_PRIVATE)
+        toggle_button.isChecked = mPreferances.getBoolean(TOGGLE_KEY, false)
         //
         if (toggle_button.isChecked()) {
             val editor = getSharedPreferences(shareedPreFile, Context.MODE_PRIVATE).edit()
@@ -97,8 +100,9 @@ class SettingsActivity : AppCompatActivity() {
             editor.putBoolean(TOGGLE_KEY, false)
             editor.apply()
         }
-       
+
     }
+
     override fun onPause() {
         super.onPause()
         val preferencesEditor = mPreferances.edit()
@@ -106,7 +110,10 @@ class SettingsActivity : AppCompatActivity() {
         preferencesEditor.putInt(SPINNER_KEY, spinner_button)
         preferencesEditor.apply()
     }
+
 }
+
+
 
 
 

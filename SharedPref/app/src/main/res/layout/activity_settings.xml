@@ -26,20 +26,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toBottomOf="@id/spinner"
-        app:layout_constraintBottom_toTopOf="@id/text_view"
+        app:layout_constraintBottom_toTopOf="@id/launch_button"
         app:layout_editor_absoluteX="70dp"
         app:layout_editor_absoluteY="309dp"
         tools:layout_editor_absoluteY="309dp" />
 
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/launch_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toggle_button"
-        />
 
     <Button
         android:id="@+id/launch_button"
